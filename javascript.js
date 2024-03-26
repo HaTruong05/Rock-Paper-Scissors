@@ -54,7 +54,7 @@ playGame()
 
 let rock = document.querySelector('#rock')
 let paper = document.querySelector('#paper')
-let scissors = document.querySelector('scissors')
+let scissors = document.querySelector('#scissors')
 
 rock.addEventListener('click', () => {
     console.log("Player picked Rock");
