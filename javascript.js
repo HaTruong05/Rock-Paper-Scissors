@@ -41,32 +41,29 @@ function playGame() {
     let playerScore = 0;
     let computerScore = 0;
 
-    for (i = 0; i < 5; i++) {
-        let playerChoice = getPlayerChoice();
-        let computerChoice = getComputerChoice();
-        let result = playRound(playerChoice, computerChoice);
-        
-        console.log(`Player chose ${playerChoice}`)
-        console.log(`Computer chose ${computerChoice}`)
-
-        if (result === LOSE) {
-            console.log(`You Lose this Round! ${computerChoice} beats ${playerChoice}`);
-            computerScore++;
-        } else if (result === WIN) {
-            console.log(`You Win this Round! ${playerChoice} beats ${computerChoice}`);
-            playerScore++;
-        } else {
-            console.log(`It's a Tie for this Round! You both chose ${playerChoice}`);
-        }
-    }
-
     if (computerScore > playerScore) {
-        console.log(`You Lose! Player: ${playerScore} | Computer: ${computerScore}`)
+        console.log(`You Lose! Player: ${playerScore} | Computer: ${computerScore}`);
     } else if (playerScore > computerScore) {
-        console.log(`You Win! Player: ${playerScore} | Computer: ${computerScore}`)
+        console.log(`You Win! Player: ${playerScore} | Computer: ${computerScore}`);
     } else {
-        console.log(`It's a tie! Player: ${playerScore} | Computer: ${computerScore}`)
+        console.log(`It's a tie! Player: ${playerScore} | Computer: ${computerScore}`);
     }
 }
 
 playGame()
+
+let rock = document.querySelector('#rock')
+let paper = document.querySelector('#paper')
+let scissors = document.querySelector('scissors')
+
+rock.addEventListener('click', () => {
+    console.log("Player picked Rock");
+});
+
+paper.addEventListener('click', () => {
+    console.log("Player picked Paper");
+});
+
+scissors.addEventListener('click', () => {
+    console.log("Player picked Scissors");
+});
