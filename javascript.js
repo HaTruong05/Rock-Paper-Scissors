@@ -17,14 +17,12 @@ OUTCOME.classList.add("hide")
 
 function detectSpaceBar(event) {
     if (event.key === " " || event.key === "Spacebar" || event.key === "Enter"){
+        document.activeElement.blur();
         playGame();
         document.removeEventListener("keydown", detectSpaceBar)
     }
 }
 
-// ROCK.classList.add("no-hover")
-// PAPER.classList.add("no-hover")
-// SCISSORS.classList.add("no-hover")
 playGame();
 
 function getComputerChoice() {
@@ -48,7 +46,7 @@ function resolveTurn(playerSelection){
         computerScore++;
     }
     
-    SCOREBOARD.textContent = `You: ${playerScore} | Computer: ${computerScore}`;
+    scoreboard.innerHTML = `<i class="fas fa-user"></i> ${playerScore} | <i class="fa-solid fa-computer"></i> ${computerScore}`;
 }
 
 function endGame(){
@@ -64,9 +62,7 @@ function endGame(){
     PAPER.removeEventListener('click', paperChoice);
     SCISSORS.removeEventListener('click', scissorsChoice);
 
-    ROCK.classList.add("no-hover")
-    PAPER.classList.add("no-hover")
-    SCISSORS.classList.add("no-hover")
+    document.activeElement.blur()
 
     document.addEventListener('keydown', detectSpaceBar);
 }
@@ -82,19 +78,19 @@ function updateResult(playerSelection){
 function rockChoice(event){
     event.target.blur();
     updateResult("Rock");
-    OUTCOME.classList.add("show")
+    OUTCOME.classList.remove("hide");
 }
 
 function paperChoice(event){
     event.target.blur();
     updateResult("Paper");
-    OUTCOME.classList.add("show")
+    OUTCOME.classList.remove("hide");
 }
 
 function scissorsChoice(event){
     event.target.blur();
     updateResult("Scissors");
-    OUTCOME.classList.add("show")
+    OUTCOME.classList.remove("hide");
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -125,7 +121,8 @@ function playGame() {
     playerScore = 0;
     computerScore = 0;
     const scoreboard = document.querySelector("#scoreboard");
-    scoreboard.textContent = `You: ${playerScore} | Computer: ${computerScore}`;
+    scoreboard.innerHTML = `<i class="fas fa-user"></i> ${playerScore} | <i class="fa-solid fa-computer"></i> ${computerScore}`;
+    OUTCOME.classList.add("hide")
     
     ROCK.addEventListener('click', rockChoice);
     PAPER.addEventListener('click', paperChoice);
