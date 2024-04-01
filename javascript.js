@@ -9,11 +9,19 @@ const ROCK = document.querySelector('#rock')
 const PAPER = document.querySelector('#paper')
 const SCISSORS = document.querySelector('#scissors')
 
-const PLAY = document.querySelector("#play")
-
 const MAX_SCORE = 5
 
-PLAY.addEventListener('click', playGame);
+function detectSpaceBar(event) {
+    if (event.key === " " || event.key === "Spacebar" || event.key === "Enter"){
+        playGame();
+        document.removeEventListener("keydown", detectSpaceBar)
+    }
+}
+
+document.addEventListener('keydown', detectSpaceBar);
+ROCK.classList.add("no-hover")
+PAPER.classList.add("no-hover")
+SCISSORS.classList.add("no-hover")
 
 function getComputerChoice() {
     const choices = ["Rock", "Paper", "Scissors"];
@@ -52,7 +60,12 @@ function endGame(outcome){
     ROCK.removeEventListener('click', rockChoice);
     PAPER.removeEventListener('click', paperChoice);
     SCISSORS.removeEventListener('click', scissorsChoice);
-    PLAY.addEventListener('click', playGame)
+
+    ROCK.classList.add("no-hover")
+    PAPER.classList.add("no-hover")
+    SCISSORS.classList.add("no-hover")
+
+    document.addEventListener('keydown', detectSpaceBar);
 }
 
 function updateResult(playerSelection){
@@ -65,16 +78,19 @@ function updateResult(playerSelection){
 
 }
 
-function rockChoice(){
+function rockChoice(event){
     updateResult("Rock")
+    event.target.blur()
 }
 
-function paperChoice(){
+function paperChoice(event){
     updateResult("Paper")
+    event.target.blur()
 }
 
-function scissorsChoice(){
+function scissorsChoice(event){
     updateResult("Scissors")
+    event.target.blur()
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -102,6 +118,8 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function playGame() {
+    playerScore = 0;
+    computerScore = 0;
     const scoreboard = document.querySelector("#scoreboard");
     scoreboard.textContent = `You: ${playerScore} | Computer: ${computerScore}`;
     
@@ -109,5 +127,7 @@ function playGame() {
     PAPER.addEventListener('click', paperChoice);
     SCISSORS.addEventListener('click', scissorsChoice);
 
-    PLAY.removeEventListener("click", playGame)
+    ROCK.classList.remove("no-hover")
+    PAPER.classList.remove("no-hover")
+    SCISSORS.classList.remove("no-hover")
 }
