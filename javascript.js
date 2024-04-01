@@ -35,7 +35,7 @@ function getComputerChoice() {
 
 function resolveTurn(playerSelection){
     const computerChoice = getComputerChoice();
-    OUTCOME.textContent = `Player chose ${playerSelection}. Computer chose ${computerChoice}. `;
+    OUTCOME.textContent = `Player chose ${playerSelection.toLowerCase()}. Computer chose ${computerChoice.toLowerCase()}. `;
 
     const roundOutcome = playRound(playerSelection, computerChoice);
     if (roundOutcome === TIE) {
