@@ -2,14 +2,18 @@ const LOSE = -1;
 const TIE = 0;
 const WIN = 1;
 
-let playerScore = 0;
-let computerScore = 0;
+let playerScore;
+let computerScore;
 
 const ROCK = document.querySelector('#rock')
 const PAPER = document.querySelector('#paper')
 const SCISSORS = document.querySelector('#scissors')
 
 const MAX_SCORE = 5
+
+const OUTCOME = document.querySelector("#outcome");
+const SCOREBOARD = document.querySelector("#scoreboard");
+OUTCOME.classList.add("hide")
 
 function detectSpaceBar(event) {
     if (event.key === " " || event.key === "Spacebar" || event.key === "Enter"){
@@ -18,10 +22,10 @@ function detectSpaceBar(event) {
     }
 }
 
-document.addEventListener('keydown', detectSpaceBar);
-ROCK.classList.add("no-hover")
-PAPER.classList.add("no-hover")
-SCISSORS.classList.add("no-hover")
+// ROCK.classList.add("no-hover")
+// PAPER.classList.add("no-hover")
+// SCISSORS.classList.add("no-hover")
+playGame();
 
 function getComputerChoice() {
     const choices = ["Rock", "Paper", "Scissors"];
@@ -29,30 +33,29 @@ function getComputerChoice() {
     return choices[randomChoice];
 }
 
-function resolveTurn(playerSelection, outcome){
+function resolveTurn(playerSelection){
     const computerChoice = getComputerChoice();
-    outcome.textContent = `Player chose ${playerSelection}. Computer chose ${computerChoice}. `;
+    OUTCOME.textContent = `Player chose ${playerSelection}. Computer chose ${computerChoice}. `;
 
     const roundOutcome = playRound(playerSelection, computerChoice);
     if (roundOutcome === TIE) {
-        outcome.textContent += "It's a tie!";
+        OUTCOME.textContent += "It's a tie!";
     } else if (roundOutcome === WIN) {
-        outcome.textContent += "You win this round!";
+        OUTCOME.textContent += "You win this round!";
         playerScore++;
     } else {
-        outcome.textContent += "You lose this round!";
+        OUTCOME.textContent += "You lose this round!";
         computerScore++;
     }
-
-    const scoreboard = document.querySelector("#scoreboard");
-    scoreboard.textContent = `You: ${playerScore} | Computer: ${computerScore}`;
+    
+    SCOREBOARD.textContent = `You: ${playerScore} | Computer: ${computerScore}`;
 }
 
-function endGame(outcome){
+function endGame(){
     if (playerScore === MAX_SCORE){
-        outcome.textContent = "You won! Play again?";
+        OUTCOME.textContent = "You won! Press spacebar to play again.";
     } else {
-        outcome.textContent = "You lost! Try again.";
+        OUTCOME.textContent = "You lost! Press spacebar to play again.";
     }
     playerScore = 0;
     computerScore = 0;
@@ -69,28 +72,29 @@ function endGame(outcome){
 }
 
 function updateResult(playerSelection){
-    const outcome = document.querySelector("#outcome");
-    resolveTurn(playerSelection, outcome);
-
+    resolveTurn(playerSelection);
     if (playerScore === MAX_SCORE || computerScore === MAX_SCORE){
-        endGame(outcome);
+        endGame();
     }
 
 }
 
 function rockChoice(event){
-    updateResult("Rock")
-    event.target.blur()
+    event.target.blur();
+    updateResult("Rock");
+    OUTCOME.classList.add("show")
 }
 
 function paperChoice(event){
-    updateResult("Paper")
-    event.target.blur()
+    event.target.blur();
+    updateResult("Paper");
+    OUTCOME.classList.add("show")
 }
 
 function scissorsChoice(event){
-    updateResult("Scissors")
-    event.target.blur()
+    event.target.blur();
+    updateResult("Scissors");
+    OUTCOME.classList.add("show")
 }
 
 function playRound(playerSelection, computerSelection) {
